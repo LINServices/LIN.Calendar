@@ -7,11 +7,11 @@
 .idea/
 .idea/*
 
-./LIN.Contacts/appsettings.json
-LIN.Contacts/appsettings.json
+./LIN.Calendar/appsettings.json
+LIN.Calendar/appsettings.json
 
-./LIN.Contacts/appsettings.Development.json
-LIN.Contacts/appsettings.Development.json
+./LIN.Calendar/appsettings.Development.json
+LIN.Calendar/appsettings.Development.json
 
 
 # User-specific files
