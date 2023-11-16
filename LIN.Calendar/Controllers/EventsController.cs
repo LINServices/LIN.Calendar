@@ -2,7 +2,7 @@ namespace LIN.Contacts.Controllers;
 
 
 [Route("events")]
-internal class EventsController : ControllerBase
+public class EventsController : ControllerBase
 {
 
 
