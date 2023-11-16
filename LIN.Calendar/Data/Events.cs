@@ -88,8 +88,13 @@ public class Events
         {
 
             // El usuario ya existe.
-            context.DataBase.Attach(data.Profile);
+            context.DataBase.Attach(data.Creador);
 
+            // Los invitados.
+            foreach (var guest in data.Guests)
+                context.DataBase.Attach(guest);
+
+            // Guardar el evento.
             var res = context.DataBase.Events.Add(data);
             await context.DataBase.SaveChangesAsync();
             return new(Responses.Success, data.Id);
@@ -137,14 +142,13 @@ public class Events
     public static async Task<ReadAllResponse<EventModel>> ReadAll(int id, Conexión context)
     {
 
-
         // Ejecución
         try
         {
 
-            // Query de contactos
+            // Consulta.
             var contacts = await (from evento in context.DataBase.Events
-                                  where evento.Profile.Id == id
+                                  where evento.Guests.Any(t => t.Id == id)
                                   orderby evento.Nombre
                                   select evento).ToListAsync();
 
