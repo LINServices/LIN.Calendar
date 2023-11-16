@@ -1,12 +1,12 @@
-# Servidor de Agenda de Contactos
+# Servidor de Agenda de eventos
 
-Este es un servidor de agenda de contactos desarrollado en .NET 7 y utilizando Entity Framework Core con SQL Server como base de datos. El servidor proporciona una API para gestionar los contactos, permitiendo crear, leer, actualizar y eliminar registros de contactos.
+Guardar eventos de calendario.
 
 ## Requisitos Previos
 
 Asegúrate de tener los siguientes requisitos previos instalados en tu sistema:
 
-- [.NET 7 SDK](https://dotnet.microsoft.com/download/dotnet/7.0)
+- [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
 - [SQL Server](https://www.microsoft.com/sql-server/)
 
 ## Configuración
@@ -14,7 +14,7 @@ Asegúrate de tener los siguientes requisitos previos instalados en tu sistema:
 1. Clona este repositorio a tu máquina local:
 
    ```shell
-   git clone https://github.com/LINServices/LIN.Contacts.git
+   git clone https://github.com/LINServices/LIN.Calendar.git
    ```
 
 2. Abre el proyecto en tu entorno de desarrollo favorito, como Visual Studio o Visual Studio Code.
@@ -33,12 +33,3 @@ El servidor estará en funcionamiento y escuchando en el puerto especificado en 
 ## Importante
 
 Recuerda que este servicio forma parte de LIN y usa para la autenticar, LIN Identity.
-
-
-## Contribuciones
-
-Si deseas contribuir a este proyecto, por favor abre un _pull request_ y describe los cambios propuestos. También puedes informar sobre problemas abriendo _issues_ en el repositorio.
-
-## Licencia
-
-Este proyecto está bajo la licencia MIT.
