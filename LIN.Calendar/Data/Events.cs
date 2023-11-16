@@ -77,7 +77,7 @@ public class Events
 
 
     /// <summary>
-    /// Crea un contacto.
+    /// Crea un evento.
     /// </summary>
     /// <param name="data">Modelo.</param>
     /// <param name="context">Contexto de conexión.</param>
@@ -103,9 +103,9 @@ public class Events
 
 
     /// <summary>
-    /// Obtiene un contacto
+    /// Obtiene un evento.
     /// </summary>
-    /// <param name="id">ID del contacto</param>
+    /// <param name="id">ID del evento</param>
     /// <param name="context">Contexto de conexión.</param>
     public static async Task<ReadOneResponse<EventModel>> Read(int id, Conexión context)
     {
@@ -130,7 +130,7 @@ public class Events
 
 
     /// <summary>
-    /// Obtiene los contactos asociados a un perfil.
+    /// Obtiene los eventos asociados a un perfil.
     /// </summary>
     /// <param name="id">ID del perfil.</param>
     /// <param name="context">Contexto de conexión.</param>

@@ -9,7 +9,7 @@ internal class EventsController : ControllerBase
 
 
     /// <summary>
-    /// Crear contacto.
+    /// Crear evento.
     /// </summary>
     /// <param name="token">Token de acceso.</param>
     /// <param name="model">Modelo.</param>
@@ -52,7 +52,7 @@ internal class EventsController : ControllerBase
 
 
     /// <summary>
-    /// Obtiene los contactos asociados a un perfil.
+    /// Obtiene los eventos asociados a un perfil.
     /// </summary>
     /// <param name="token">Token de acceso.</param>
     [HttpGet("all")]
