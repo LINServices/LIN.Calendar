@@ -1,5 +1,4 @@
 
-
 // Servicio de errores.
 Logger.AppName = "LIN.Calendar";
 
@@ -34,7 +33,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
-
 
 
 try
