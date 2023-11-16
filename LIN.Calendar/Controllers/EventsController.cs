@@ -1,5 +1,3 @@
-using LIN.Contacts.Memory;
-
 namespace LIN.Contacts.Controllers;
 
 
@@ -72,26 +70,6 @@ internal class EventsController : ControllerBase
 
         // Obtiene los contactos
         var all = await Data.Events.ReadAll(profileId);
-
-        // Registra en el memory
-        var profileOnMemory = Mems.Sessions[profileId];
-
-        if (profileOnMemory == null)
-        {
-            Mems.Sessions.Add(new()
-            {
-                Contactos = all.Models,
-                Profile = new()
-                {
-                    Id = profileId
-                }
-            });
-        }
-        else
-        {
-            profileOnMemory.Contactos = all.Models;
-        }
-
 
         // Respuesta.
         return new ReadAllResponse<EventModel>()
