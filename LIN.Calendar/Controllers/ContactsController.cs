@@ -43,7 +43,7 @@ internal class ContactsController : ControllerBase
         };
 
         // Crear el contacto
-        var response = await Data.Contacts.Create(model);
+        var response = await Data.Events.Create(model);
 
         return response;
 
@@ -71,7 +71,7 @@ internal class ContactsController : ControllerBase
             };
 
         // Obtiene los contactos
-        var all = await Data.Contacts.ReadAll(profileId);
+        var all = await Data.Events.ReadAll(profileId);
 
         // Registra en el memory
         var profileOnMemory = Mems.Sessions[profileId];

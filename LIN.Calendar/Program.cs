@@ -1,7 +1,7 @@
 
 
 // Servicio de errores.
-Logger.AppName = "LIN.Contacts";
+Logger.AppName = "LIN.Calendar";
 
 // Constructor.
 var builder = WebApplication.CreateBuilder(args);

@@ -12,21 +12,9 @@ public class Context : DbContext
 
 
     /// <summary>
-    /// Tabla de contactos.
+    /// Tabla de eventos.
     /// </summary>
-    public DbSet<ContactModel> Contacts { get; set; }
-
-
-    /// <summary>
-    /// Tabla de Emails.
-    /// </summary>
-    public DbSet<MailModel> Mails { get; set; }
-
-
-    /// <summary>
-    /// Tabla de teléfonos.
-    /// </summary>
-    public DbSet<PhoneModel> Phones { get; set; }
+    public DbSet<EventModel> Events { get; set; }
 
 
 
