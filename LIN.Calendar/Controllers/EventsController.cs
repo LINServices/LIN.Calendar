@@ -3,8 +3,8 @@ using LIN.Contacts.Memory;
 namespace LIN.Contacts.Controllers;
 
 
-[Route("contacts")]
-internal class ContactsController : ControllerBase
+[Route("events")]
+internal class EventsController : ControllerBase
 {
 
 
@@ -14,7 +14,7 @@ internal class ContactsController : ControllerBase
     /// <param name="token">Token de acceso.</param>
     /// <param name="model">Modelo.</param>
     [HttpPost]
-    public async Task<HttpCreateResponse> Create([FromHeader] string token, [FromBody] ContactModel model)
+    public async Task<HttpCreateResponse> Create([FromHeader] string token, [FromBody] EventModel model)
     {
 
         // Info del token.
@@ -37,7 +37,7 @@ internal class ContactsController : ControllerBase
             };
 
         // Agrega de quien es el contacto
-        model.Im = new()
+        model.Profile = new()
         {
             Id = profileId
         };
@@ -56,7 +56,7 @@ internal class ContactsController : ControllerBase
     /// </summary>
     /// <param name="token">Token de acceso.</param>
     [HttpGet("all")]
-    public async Task<HttpReadAllResponse<ContactModel>> ReadAll([FromHeader] string token)
+    public async Task<HttpReadAllResponse<EventModel>> ReadAll([FromHeader] string token)
     {
 
         // Info dek token
@@ -64,7 +64,7 @@ internal class ContactsController : ControllerBase
 
         // Token es invalido.
         if (!isValid)
-            return new ReadAllResponse<ContactModel>()
+            return new ReadAllResponse<EventModel>()
             {
                 Message = "Token invalido",
                 Response = Responses.Unauthorized
@@ -94,7 +94,7 @@ internal class ContactsController : ControllerBase
 
 
         // Respuesta.
-        return new ReadAllResponse<ContactModel>()
+        return new ReadAllResponse<EventModel>()
         {
             Models = all.Models,
             Response = Responses.Success
