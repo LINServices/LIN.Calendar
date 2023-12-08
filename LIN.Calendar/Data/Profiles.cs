@@ -129,7 +129,6 @@ public class Profiles
     public static async Task<ReadOneResponse<ProfileModel>> Read(int id, Conexión context)
     {
 
-
         // Ejecución
         try
         {
@@ -185,8 +184,6 @@ public class Profiles
     /// <param name="context">Contexto de conexión.</param>
     public static async Task<ReadAllResponse<ProfileModel>> ReadByAccounts(IEnumerable<int> ids, Conexión context)
     {
-
-
         // Ejecución
         try
         {
