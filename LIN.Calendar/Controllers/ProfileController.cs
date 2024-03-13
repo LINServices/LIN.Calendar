@@ -32,7 +32,7 @@ public class ProfileController : ControllerBase
 
 
         // Obtiene el perfil
-        var profile = await Profiles.ReadByAccount(authResponse.Model.ID);
+        var profile = await Profiles.ReadByAccount(authResponse.Model.Id);
 
         switch (profile.Response)
         {
@@ -46,7 +46,7 @@ public class ProfileController : ControllerBase
                         Account = authResponse.Model,
                         Profile = new()
                         {
-                            AccountId = authResponse.Model.ID,
+                            AccountId = authResponse.Model.Id,
                             Creation = DateTime.Now
                         }
                     });
@@ -112,12 +112,9 @@ public class ProfileController : ControllerBase
         if (response.Response != Responses.Success)
             return new(response.Response);
 
-        if (response.Model.Estado != Types.Auth.Enumerations.AccountStatus.Normal)
-            return new(Responses.NotExistAccount);
+       
 
-
-
-        var profile = await Profiles.ReadByAccount(response.Model.ID);
+        var profile = await Profiles.ReadByAccount(response.Model.Id);
 
 
         var httpResponse = new ReadOneResponse<AuthModel<ProfileModel>>()
@@ -161,7 +158,7 @@ public class ProfileController : ControllerBase
     {
 
         // Busca el acceso
-        var accounts = await Access.Auth.Controllers.Account.Search(pattern, token, false);
+        var accounts = await Access.Auth.Controllers.Account.Search(pattern, token);
 
         // Si no tiene acceso
         if (accounts.Response != Responses.Success)
@@ -172,14 +169,14 @@ public class ProfileController : ControllerBase
             };
 
 
-        var mappedIds = accounts.Models.Select(T => T.ID).ToList();
+        var mappedIds = accounts.Models.Select(T => T.Id).ToList();
 
         var profiles = await Profiles.ReadByAccounts(mappedIds);
 
 
         var final = from P in profiles.Models
                     join A in accounts.Models
-                        on P.AccountId equals A.ID
+                        on P.AccountId equals A.Id
                     select new SessionModel<ProfileModel>
                     {
                         Account = A,

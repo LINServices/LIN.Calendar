@@ -19,7 +19,7 @@ builder.Services.AddCors(options =>
 
 
 // Obtiene el string de conexión SQL.
-var sqlConnection = builder.Configuration["ConnectionStrings:somee"] ?? string.Empty;
+var sqlConnection = builder.Configuration["ConnectionStrings:local"] ?? string.Empty;
 
 // Servicio de BD
 builder.Services.AddDbContext<Context>(options =>
@@ -60,6 +60,8 @@ app.UseAuthorization();
 Conexión.SetStringConnection(sqlConnection);
 Jwt.Open();
 App.Open();
+
+LIN.Access.Auth.Build.Init();
 
 app.MapControllers();
 

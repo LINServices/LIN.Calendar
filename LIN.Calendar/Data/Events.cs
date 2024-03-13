@@ -149,6 +149,7 @@ public class Events
             // Consulta.
             var contacts = await (from evento in context.DataBase.Events
                                   where evento.Guests.Any(t => t.Id == id)
+                                  || evento.Creador.Id == id
                                   orderby evento.Nombre
                                   select evento).ToListAsync();
 
