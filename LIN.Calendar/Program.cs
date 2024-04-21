@@ -19,8 +19,11 @@ builder.Services.AddCors(options =>
 
 
 // Obtiene el string de conexión SQL.
+#if DEBUG
 var sqlConnection = builder.Configuration["ConnectionStrings:local"] ?? string.Empty;
-
+#elif RELEASE
+var sqlConnection = builder.Configuration["ConnectionStrings:somee"] ?? string.Empty;
+#endif
 // Servicio de BD
 builder.Services.AddDbContext<Context>(options =>
 {
