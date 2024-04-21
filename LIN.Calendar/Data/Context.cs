@@ -58,6 +58,12 @@ public class Context : DbContext
         modelBuilder.Entity<EventGuestModel>()
             .HasKey(t => new { t.EventId, t.ProfileId });
 
+
+        // Nombres de las tablas.
+        modelBuilder.Entity<ProfileModel>().ToTable("PROFILES");
+        modelBuilder.Entity<EventModel>().ToTable("EVENTS");
+        modelBuilder.Entity<EventGuestModel>().ToTable("GUESTS");
+
     }
 
 
