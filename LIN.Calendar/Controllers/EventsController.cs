@@ -34,15 +34,19 @@ public class EventsController : ControllerBase
                 Response = Responses.InvalidParam
             };
 
-        // Agrega.
-        model.Creador = new()
+
+        model.Guests ??= [];
+
+        if (!model.Guests.Any(t=>t.ProfileId == profileId))
         {
-            Id = profileId
-        };
-
-
-        model.Guests.Add(model.Creador);
-
+            model.Guests.Add(new()
+            {
+                Profile = new()
+                {
+                    Id = profileId
+                }
+            });
+        }
 
         // Crear el contacto
         var response = await Data.Events.Create(model);

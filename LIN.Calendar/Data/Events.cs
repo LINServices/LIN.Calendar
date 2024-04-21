@@ -87,12 +87,12 @@ public class Events
         try
         {
 
-            // El usuario ya existe.
-            context.DataBase.Attach(data.Creador);
-
             // Los invitados.
             foreach (var guest in data.Guests)
-                context.DataBase.Attach(guest);
+            {
+                guest.Event = data;
+                context.DataBase.Attach(guest.Profile);
+            }
 
             // Guardar el evento.
             var res = context.DataBase.Events.Add(data);
@@ -148,8 +148,7 @@ public class Events
 
             // Consulta.
             var contacts = await (from evento in context.DataBase.Events
-                                  where evento.Guests.Any(t => t.Id == id)
-                                  || evento.Creador.Id == id
+                                  where evento.Guests.Any(t => t.ProfileId == id)
                                   orderby evento.Nombre
                                   select evento).ToListAsync();
 
