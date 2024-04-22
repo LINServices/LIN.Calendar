@@ -1,5 +1,9 @@
 
 // Servicio de errores.
+using LIN.Calendar;
+using LIN.Calendar.Data;
+using LIN.Calendar.Services;
+
 Logger.AppName = "LIN.Calendar";
 
 // Constructor.

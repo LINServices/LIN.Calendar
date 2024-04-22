@@ -1,4 +1,6 @@
-﻿namespace LIN.Contacts.Data;
+﻿using LIN.Calendar;
+
+namespace LIN.Calendar.Data;
 
 
 public class Profiles

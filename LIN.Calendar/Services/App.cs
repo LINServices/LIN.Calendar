@@ -1,4 +1,4 @@
-﻿namespace LIN.Contacts.Services;
+﻿namespace LIN.Calendar.Services;
 
 
 public class App

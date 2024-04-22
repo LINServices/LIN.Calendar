@@ -1,4 +1,7 @@
-namespace LIN.Contacts.Controllers;
+using LIN.Calendar.Data;
+using LIN.Calendar.Services;
+
+namespace LIN.Calendar.Controllers;
 
 
 [Route("events")]
@@ -37,7 +40,7 @@ public class EventsController : ControllerBase
 
         model.Guests ??= [];
 
-        if (!model.Guests.Any(t=>t.ProfileId == profileId))
+        if (!model.Guests.Any(t => t.ProfileId == profileId))
         {
             model.Guests.Add(new()
             {
@@ -49,7 +52,7 @@ public class EventsController : ControllerBase
         }
 
         // Crear el contacto
-        var response = await Data.Events.Create(model);
+        var response = await Events.Create(model);
 
         return response;
 
@@ -77,7 +80,7 @@ public class EventsController : ControllerBase
             };
 
         // Obtiene los contactos
-        var all = await Data.Events.ReadAll(profileId);
+        var all = await Events.ReadAll(profileId);
 
         // Respuesta.
         return new ReadAllResponse<EventModel>()

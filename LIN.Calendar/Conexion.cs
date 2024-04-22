@@ -1,4 +1,6 @@
-﻿namespace LIN.Contacts;
+﻿using LIN.Calendar.Data;
+
+namespace LIN.Calendar;
 
 
 /// <summary>

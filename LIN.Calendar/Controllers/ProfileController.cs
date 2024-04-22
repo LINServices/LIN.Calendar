@@ -1,4 +1,7 @@
-namespace LIN.Contacts.Controllers;
+using LIN.Calendar.Data;
+using LIN.Calendar.Services;
+
+namespace LIN.Calendar.Controllers;
 
 
 [Route("profile")]
@@ -112,7 +115,7 @@ public class ProfileController : ControllerBase
         if (response.Response != Responses.Success)
             return new(response.Response);
 
-       
+
 
         var profile = await Profiles.ReadByAccount(response.Model.Id);
 

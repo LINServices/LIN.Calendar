@@ -4,7 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace LIN.Contacts.Services;
+namespace LIN.Calendar.Services;
 
 
 public class Jwt

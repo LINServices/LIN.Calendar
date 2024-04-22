@@ -1,7 +1,6 @@
 ﻿global using Http.ResponsesList;
-global using LIN.Contacts;
-global using LIN.Contacts.Data;
-global using LIN.Contacts.Services;
+global using LIN.Calendar;
+global using LIN.Calendar.Services;
 global using LIN.Types.Cloud.Identity.Abstracts;
 global using LIN.Types.Calendar.Models;
 global using LIN.Types.Responses;

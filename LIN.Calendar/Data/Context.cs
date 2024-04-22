@@ -1,4 +1,4 @@
-﻿namespace LIN.Contacts.Data;
+﻿namespace LIN.Calendar.Data;
 
 
 public class Context : DbContext
