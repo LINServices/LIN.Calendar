@@ -8,3 +8,4 @@ global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.EntityFrameworkCore;
 global using LIN.Access.Logger;
 global using Http.Services;
+global using LIN.Calendar.Services.Models;

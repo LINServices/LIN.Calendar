@@ -12,19 +12,12 @@ public class EventsController : ControllerBase
     /// <param name="token">Token de acceso.</param>
     /// <param name="model">Modelo.</param>
     [HttpPost]
+    [LocalToken]
     public async Task<HttpCreateResponse> Create([FromHeader] string token, [FromBody] EventModel model)
     {
 
-        // Info del token.
-        var (isValid, profileId, _) = Jwt.Validate(token);
-
-        // Si el token es invalido.
-        if (!isValid)
-            return new CreateResponse()
-            {
-                Message = "Token invalido",
-                Response = Responses.Unauthorized
-            };
+        // Información del token.
+        JwtModel tokenInfo = HttpContext.Items[token] as JwtModel ?? new();
 
         // Validar
         if (model.Nombre.Trim().Length <= 0)
@@ -38,13 +31,13 @@ public class EventsController : ControllerBase
         model.Guests ??= [];
 
         // Validar integrante creador.
-        if (!model.Guests.Any(t => t.ProfileId == profileId))
+        if (!model.Guests.Any(t => t.ProfileId == tokenInfo.ProfileId))
         {
             model.Guests.Add(new()
             {
                 Profile = new()
                 {
-                    Id = profileId
+                    Id = tokenInfo.ProfileId
                 }
             });
         }
@@ -63,22 +56,15 @@ public class EventsController : ControllerBase
     /// </summary>
     /// <param name="token">Token de acceso.</param>
     [HttpGet("all")]
+    [LocalToken]
     public async Task<HttpReadAllResponse<EventModel>> ReadAll([FromHeader] string token)
     {
 
-        // Info dek token
-        var (isValid, profileId, _) = Jwt.Validate(token);
-
-        // Token es invalido.
-        if (!isValid)
-            return new ReadAllResponse<EventModel>()
-            {
-                Message = "Token invalido",
-                Response = Responses.Unauthorized
-            };
+        // Información del token.
+        JwtModel tokenInfo = HttpContext.Items[token] as JwtModel ?? new();
 
         // Obtiene los contactos
-        var all = await Data.Events.ReadAll(profileId);
+        var all = await Data.Events.ReadAll(tokenInfo.ProfileId);
 
         // Respuesta.
         return new ReadAllResponse<EventModel>()
@@ -88,6 +74,7 @@ public class EventsController : ControllerBase
         };
 
     }
+
 
 
 }
