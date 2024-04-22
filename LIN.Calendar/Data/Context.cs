@@ -1,7 +1,10 @@
 ﻿namespace LIN.Calendar.Data;
 
 
-public class Context : DbContext
+/// <summary>
+/// Nuevo contexto a la base de datos
+/// </summary>
+public class Context(DbContextOptions<Context> options) : DbContext(options)
 {
 
 
@@ -26,13 +29,6 @@ public class Context : DbContext
 
 
     /// <summary>
-    /// Nuevo contexto a la base de datos
-    /// </summary>
-    public Context(DbContextOptions<Context> options) : base(options) { }
-
-
-
-    /// <summary>
     /// Naming DB
     /// </summary>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -51,9 +47,9 @@ public class Context : DbContext
 
 
         modelBuilder.Entity<EventGuestModel>()
-         .HasOne(t => t.Profile)
-         .WithMany()
-         .HasForeignKey(t => t.ProfileId);
+             .HasOne(t => t.Profile)
+             .WithMany()
+             .HasForeignKey(t => t.ProfileId);
 
         modelBuilder.Entity<EventGuestModel>()
             .HasKey(t => new { t.EventId, t.ProfileId });

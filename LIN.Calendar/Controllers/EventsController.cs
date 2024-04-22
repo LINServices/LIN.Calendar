@@ -90,6 +90,17 @@ public class EventsController : ControllerBase
         // Información del token.
         JwtModel tokenInfo = HttpContext.Items[token] as JwtModel ?? new();
 
+        // Iam.
+        var iam = await Services.Iam.Validate(tokenInfo.ProfileId, id);
+
+        // Validar Iam.
+        if (iam != Types.Enumerations.IamLevels.Privileged)
+            return new()
+            {
+                Response = Responses.Unauthorized,
+                Message = "No tienes autorización para eliminar este evento."
+            };
+
         // Obtiene los contactos
         var response = await Data.Events.Delete(id);
 

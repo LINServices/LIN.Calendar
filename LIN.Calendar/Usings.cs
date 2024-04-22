@@ -6,6 +6,5 @@ global using LIN.Types.Calendar.Models;
 global using LIN.Types.Responses;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.EntityFrameworkCore;
-global using LIN.Access.Logger;
 global using Http.Services;
 global using LIN.Calendar.Services.Models;

@@ -1,10 +1,6 @@
 
 // Servicio de errores.
-using LIN.Calendar;
 using LIN.Calendar.Data;
-using LIN.Calendar.Services;
-
-Logger.AppName = "LIN.Calendar";
 
 // Constructor.
 var builder = WebApplication.CreateBuilder(args);
@@ -50,9 +46,8 @@ try
     var dataContext = scope.ServiceProvider.GetRequiredService<Context>();
     var res = dataContext.Database.EnsureCreated();
 }
-catch (Exception ex)
+catch (Exception)
 {
-    _ = Logger.Log(ex, 3);
 }
 
 app.UseCors("AllowAnyOrigin");
