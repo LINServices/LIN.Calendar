@@ -6,7 +6,7 @@ public partial class Events
 
 
     /// <summary>
-    /// Crea un contacto.
+    /// Crea un evento.
     /// </summary>
     /// <param name="data">Modelo.</param>
     public static async Task<CreateResponse> Create(EventModel data)
@@ -27,9 +27,9 @@ public partial class Events
 
 
     /// <summary>
-    /// Obtiene un contacto
+    /// Obtiene un evento.
     /// </summary>
-    /// <param name="id">ID del contacto</param>
+    /// <param name="id">ID del evento</param>
     public static async Task<ReadOneResponse<EventModel>> Read(int id)
     {
 
@@ -48,7 +48,7 @@ public partial class Events
 
 
     /// <summary>
-    /// Obtiene los contactos asociados a un perfil
+    /// Obtiene los eventos asociados a un perfil
     /// </summary>
     /// <param name="id">ID del perfil</param>
     public static async Task<ReadAllResponse<EventModel>> ReadAll(int id)
@@ -59,6 +59,27 @@ public partial class Events
 
         // respuesta
         var response = await ReadAll(id, context);
+
+        context.CloseActions(connectionKey);
+
+        return response;
+
+    }
+
+
+
+    /// <summary>
+    /// Eliminar un evento.
+    /// </summary>
+    /// <param name="id">ID del evento.</param>
+    public static async Task<ResponseBase> Delete(int id)
+    {
+
+        // Contexto
+        (var context, var connectionKey) = Conexión.GetOneConnection();
+
+        // respuesta
+        var response = await Delete(id, context);
 
         context.CloseActions(connectionKey);
 

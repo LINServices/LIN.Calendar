@@ -77,4 +77,27 @@ public class EventsController : ControllerBase
 
 
 
+    /// <summary>
+    /// Eliminar un evento.
+    /// </summary>
+    /// <param name="id">Id del evento.</param>
+    /// <param name="token">Token de acceso.</param>
+    [HttpDelete]
+    [LocalToken]
+    public async Task<HttpResponseBase> Delete([FromQuery] int id, [FromHeader] string token)
+    {
+
+        // Información del token.
+        JwtModel tokenInfo = HttpContext.Items[token] as JwtModel ?? new();
+
+        // Obtiene los contactos
+        var response = await Data.Events.Delete(id);
+
+        // Respuesta.
+        return response;
+
+    }
+
+
+
 }

@@ -90,4 +90,38 @@ public partial class Events
     }
 
 
+
+    /// <summary>
+    /// Eliminar un evento.
+    /// </summary>
+    /// <param name="id">ID del evento</param>
+    /// <param name="context">Contexto de conexión.</param>
+    public static async Task<ResponseBase> Delete(int id, Conexión context)
+    {
+
+
+        // Ejecución
+        try
+        {
+
+            var result = await (from P in context.DataBase.Guests
+                                 where P.EventId == id
+                                 select P).ExecuteDeleteAsync();
+
+            result = await (from P in context.DataBase.Events
+                                where P.Id == id
+                                select P).ExecuteDeleteAsync();
+
+            if (result <= 0)
+                return new(Responses.NotRows);
+
+            return new(Responses.Success);
+        }
+        catch
+        {
+        }
+        return new();
+    }
+
+
 }
