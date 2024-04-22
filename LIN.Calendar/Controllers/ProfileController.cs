@@ -1,6 +1,3 @@
-using LIN.Calendar.Data;
-using LIN.Calendar.Services;
-
 namespace LIN.Calendar.Controllers;
 
 
@@ -12,14 +9,14 @@ public class ProfileController : ControllerBase
     /// <summary>
     /// Inicia una sesión de usuario.
     /// </summary>
-    /// <param name="user">Usuario único</param>
-    /// <param name="password">Contraseña del usuario</param>
+    /// <param name="user">Usuario único.</param>
+    /// <param name="password">Contraseña del usuario.</param>
     [HttpGet("login")]
     public async Task<HttpReadOneResponse<AuthModel<ProfileModel>>> Login([FromQuery] string user, [FromQuery] string password)
     {
 
-        // Comprobación
-        if (!user.Any() || !password.Any())
+        // Validar parámetros.
+        if (string.IsNullOrWhiteSpace(user) || string.IsNullOrWhiteSpace(password))
             return new(Responses.InvalidParam);
 
         // Respuesta de autenticación.
@@ -33,18 +30,23 @@ public class ProfileController : ControllerBase
                 Response = authResponse.Response
             };
 
-
         // Obtiene el perfil
-        var profile = await Profiles.ReadByAccount(authResponse.Model.Id);
+        var profile = await Data.Profiles.ReadByAccount(authResponse.Model.Id);
 
+        // Validar la respuesta.
         switch (profile.Response)
         {
+
+            // Correcto.
             case Responses.Success:
                 break;
 
+            // El perfil no existe.
             case Responses.NotExistProfile:
                 {
-                    var res = await Profiles.Create(new()
+
+                    // Crear.
+                    var createResponse = await Data.Profiles.Create(new()
                     {
                         Account = authResponse.Model,
                         Profile = new()
@@ -54,24 +56,26 @@ public class ProfileController : ControllerBase
                         }
                     });
 
-                    if (res.Response != Responses.Success)
+                    // Validar.
+                    if (createResponse.Response != Responses.Success)
                     {
                         return new ReadOneResponse<AuthModel<ProfileModel>>
                         {
                             Response = Responses.UnavailableService,
-                            Message = "Un error grave ocurri�"
+                            Message = "Un error grave ocurrió"
                         };
                     }
 
-                    profile = res;
+                    profile = createResponse;
                     break;
                 }
 
+            // Si hubo un error grave.
             default:
                 return new ReadOneResponse<AuthModel<ProfileModel>>
                 {
                     Response = Responses.UnavailableService,
-                    Message = "Un error grave ocurri�"
+                    Message = "Un error grave ocurrió"
                 };
         }
 
@@ -79,10 +83,11 @@ public class ProfileController : ControllerBase
         // Genera el token
         var token = Jwt.Generate(profile.Model);
 
+
+        // Respuesta.
         return new ReadOneResponse<AuthModel<ProfileModel>>
         {
             Response = Responses.Success,
-            Message = "Success",
             Model = new()
             {
                 Account = authResponse.Model,
@@ -109,17 +114,18 @@ public class ProfileController : ControllerBase
     public async Task<HttpReadOneResponse<AuthModel<ProfileModel>>> LoginToken([FromQuery] string token)
     {
 
-        // Login en LIN Server
+        // Login en LIN el servidor.
         var response = await Access.Auth.Controllers.Authentication.Login(token);
 
+        // Validar respuesta.
         if (response.Response != Responses.Success)
             return new(response.Response);
 
 
+        // Obtener el perfil.
+        var profile = await Data.Profiles.ReadByAccount(response.Model.Id);
 
-        var profile = await Profiles.ReadByAccount(response.Model.Id);
-
-
+        // Respuesta http.
         var httpResponse = new ReadOneResponse<AuthModel<ProfileModel>>()
         {
             Response = Responses.Success,
@@ -127,6 +133,7 @@ public class ProfileController : ControllerBase
 
         };
 
+        // Validar.
         if (profile.Response == Responses.Success)
         {
             // Genera el token
@@ -152,9 +159,9 @@ public class ProfileController : ControllerBase
 
 
     /// <summary>
-    /// Obtiene los miembros de una conversación.
+    /// Buscar.
     /// </summary>
-    /// <param name="id">ID de la conversación.</param>
+    /// <param name="pattern">Patron de búsqueda.</param>
     /// <param name="token">Token de acceso.</param>
     [HttpGet("search")]
     public async Task<HttpReadAllResponse<SessionModel<ProfileModel>>> Search([FromQuery] string pattern, [FromHeader] string token)
@@ -172,11 +179,13 @@ public class ProfileController : ControllerBase
             };
 
 
+        // Id de las cuentas.
         var mappedIds = accounts.Models.Select(T => T.Id).ToList();
 
-        var profiles = await Profiles.ReadByAccounts(mappedIds);
+        // Obtener los perfiles.
+        var profiles = await Data.Profiles.ReadByAccounts(mappedIds);
 
-
+        // Map.
         var final = from P in profiles.Models
                     join A in accounts.Models
                         on P.AccountId equals A.Id
@@ -194,6 +203,7 @@ public class ProfileController : ControllerBase
         };
 
     }
+
 
 
 }
