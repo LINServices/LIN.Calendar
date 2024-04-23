@@ -79,7 +79,16 @@ public partial class Events
             var contacts = await (from evento in context.DataBase.Events
                                   where evento.Guests.Any(t => t.ProfileId == id)
                                   orderby evento.Nombre
-                                  select evento).ToListAsync();
+                                  select new EventModel
+                                  {
+                                      DateStart = evento.DateStart,
+                                      IsAllDay = evento.IsAllDay,
+                                      EndStart = evento.EndStart,
+                                      Guests = context.DataBase.Guests.Where(t=>t.EventId == evento.Id).Include(t => t.Profile).ToList(),
+                                      Id = evento.Id,
+                                      Nombre = evento.Nombre,
+                                      Type = evento.Type
+                                  }).ToListAsync();
 
             return new(Responses.Success, contacts);
         }
@@ -105,12 +114,12 @@ public partial class Events
         {
 
             var result = await (from P in context.DataBase.Guests
-                                 where P.EventId == id
-                                 select P).ExecuteDeleteAsync();
+                                where P.EventId == id
+                                select P).ExecuteDeleteAsync();
 
             result = await (from P in context.DataBase.Events
-                                where P.Id == id
-                                select P).ExecuteDeleteAsync();
+                            where P.Id == id
+                            select P).ExecuteDeleteAsync();
 
             if (result <= 0)
                 return new(Responses.NotRows);

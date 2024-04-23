@@ -51,6 +51,7 @@ public class ProfileController : ControllerBase
                         Account = authResponse.Model,
                         Profile = new()
                         {
+                            Name = authResponse.Model.Name,
                             AccountId = authResponse.Model.Id,
                             Creation = DateTime.Now
                         }
