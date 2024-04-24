@@ -42,6 +42,10 @@ public class EventsController : ControllerBase
             });
         }
 
+        // Evaluar.
+        if (model.EndStart < model.DateStart)
+            model.EndStart = model.DateStart;
+
         // Crear el contacto
         var response = await Data.Events.Create(model);
 
@@ -77,6 +81,7 @@ public class EventsController : ControllerBase
 
 
 
+
     /// <summary>
     /// Eliminar un evento.
     /// </summary>
@@ -103,6 +108,40 @@ public class EventsController : ControllerBase
 
         // Obtiene los contactos
         var response = await Data.Events.Delete(id);
+
+        // Respuesta.
+        return response;
+
+    }
+
+
+    
+    /// <summary>
+    /// Actualizar evento.
+    /// </summary>
+    /// <param name="eventModel">Modelo del evento.</param>
+    /// <param name="token">Token de acceso.</param>
+    [HttpPatch]
+    [LocalToken]
+    public async Task<HttpResponseBase> Update([FromBody] EventModel eventModel, [FromHeader] string token)
+    {
+
+        // Información del token.
+        JwtModel tokenInfo = HttpContext.Items[token] as JwtModel ?? new();
+
+        // Iam.
+        var iam = await Services.Iam.Validate(tokenInfo.ProfileId, eventModel.Id);
+
+        // Validar Iam.
+        if (iam != Types.Enumerations.IamLevels.Privileged)
+            return new()
+            {
+                Response = Responses.Unauthorized,
+                Message = "No tienes autorización para eliminar este evento."
+            };
+
+        // Obtiene los contactos
+        var response = await Data.Events.Update(eventModel);
 
         // Respuesta.
         return response;

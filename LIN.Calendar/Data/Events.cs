@@ -88,4 +88,25 @@ public partial class Events
     }
 
 
+
+    /// <summary>
+    /// Actualizar un evento.
+    /// </summary>
+    /// <param name="event">Evento.</param>
+    public static async Task<ResponseBase> Update(EventModel @event)
+    {
+
+        // Contexto
+        (var context, var connectionKey) = Conexión.GetOneConnection();
+
+        // respuesta
+        var response = await Update(@event, context);
+
+        context.CloseActions(connectionKey);
+
+        return response;
+
+    }
+
+
 }

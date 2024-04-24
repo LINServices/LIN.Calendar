@@ -133,4 +133,36 @@ public partial class Events
     }
 
 
+
+    /// <summary>
+    /// Actualizar evento.
+    /// </summary>
+    /// <param name="eventModel">Modelo.</param>
+    /// <param name="context">Contexto de conexión.</param>
+    public static async Task<ResponseBase> Update(EventModel eventModel, Conexión context)
+    {
+
+
+        // Ejecución
+        try
+        {
+
+
+            var x = await (from @event in context.DataBase.Events
+                     where @event.Id == eventModel.Id
+                     select @event).ExecuteUpdateAsync(t => t.SetProperty(t => t.IsAllDay, eventModel.IsAllDay)
+                     .SetProperty(t => t.Nombre, eventModel.Nombre)
+                     .SetProperty(t => t.DateStart, eventModel.DateStart)
+                     .SetProperty(t => t.EndStart, eventModel.EndStart)
+                     .SetProperty(t => t.Type, eventModel.Type));
+             
+            return new(Responses.Success);
+        }
+        catch
+        {
+        }
+        return new();
+    }
+
+
 }
