@@ -46,6 +46,13 @@ public class EventsController : ControllerBase
         if (model.EndStart < model.DateStart)
             model.EndStart = model.DateStart;
 
+
+        if (model.IsAllDay)
+        {
+            model.DateStart = new DateTime(model.DateStart.Year, model.DateStart.Month, model.DateStart.Day);
+            model.EndStart = new DateTime(model.DateStart.Year, model.DateStart.Month, model.DateStart.Day, 23, 59, 59);
+        }
+
         // Crear el contacto
         var response = await Data.Events.Create(model);
 
@@ -115,7 +122,7 @@ public class EventsController : ControllerBase
     }
 
 
-    
+
     /// <summary>
     /// Actualizar evento.
     /// </summary>
