@@ -1,9 +1,12 @@
-
 // Servicio de errores.
+global using LIN.Access.Logger;
 using LIN.Calendar.Data;
 
 // Constructor.
 var builder = WebApplication.CreateBuilder(args);
+
+// App en logger.
+LIN.Access.Logger.Logger.AppName = "LIN.CALENDAR";
 
 // CORS.
 builder.Services.AddCors(options =>
@@ -46,8 +49,9 @@ try
     var dataContext = scope.ServiceProvider.GetRequiredService<Context>();
     var res = dataContext.Database.EnsureCreated();
 }
-catch (Exception)
+catch (Exception ex)
 {
+    _ = Logger.Log(ex, 3);
 }
 
 app.UseCors("AllowAnyOrigin");

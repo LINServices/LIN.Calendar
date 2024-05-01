@@ -23,8 +23,9 @@ public partial class Profiles
             await context.DataBase.SaveChangesAsync();
             return new(Responses.Success, data.Profile);
         }
-        catch
+        catch (Exception ex) 
         {
+            _ = Logger.Log(ex, 3);
         }
         return new();
     }
@@ -49,8 +50,9 @@ public partial class Profiles
 
             return new(Responses.Success, profile ?? new());
         }
-        catch
+        catch (Exception ex)
         {
+            _ = Logger.Log(ex, 3);
         }
         return new();
     }
@@ -79,8 +81,9 @@ public partial class Profiles
 
             return new(Responses.Success, profile ?? new());
         }
-        catch
+        catch (Exception ex)
         {
+            _ = Logger.Log(ex, 3);
         }
         return new();
     }
@@ -107,8 +110,9 @@ public partial class Profiles
 
             return new(Responses.Success, profile ?? []);
         }
-        catch
+        catch (Exception ex)
         {
+            _ = Logger.Log(ex, 3);
         }
         return new();
     }

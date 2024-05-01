@@ -1,5 +1,4 @@
-﻿using LIN.Calendar.Services.Models;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -36,27 +35,36 @@ public class Jwt
     internal static string Generate(ProfileModel user)
     {
 
-        // Configuración
-
-        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtKey));
-
-        // Credenciales
-        var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha512);
-
-        // Reclamaciones
-        var claims = new[]
+        try
         {
+            // Configuración.
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtKey));
+
+            // Credenciales
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha512);
+
+            // Reclamaciones
+            var claims = new[]
+            {
             new Claim(ClaimTypes.PrimarySid, user.Id.ToString()), new Claim(ClaimTypes.UserData, user.AccountId.ToString())
         };
 
-        // Expiración del token
-        var expiración = DateTime.Now.AddHours(5);
+            // Expiración del token
+            var expiración = DateTime.Now.AddHours(5);
 
-        // Token
-        var token = new JwtSecurityToken(null, null, claims, null, expiración, credentials);
+            // Token
+            var token = new JwtSecurityToken(null, null, claims, null, expiración, credentials);
 
-        // Genera el token
-        return new JwtSecurityTokenHandler().WriteToken(token);
+            // Genera el token
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+        catch (Exception ex)
+        {
+            _ = Logger.Log(ex, 3);
+        }
+
+        return "";
+
     }
 
 

@@ -28,8 +28,9 @@ public partial class Events
             await context.DataBase.SaveChangesAsync();
             return new(Responses.Success, data.Id);
         }
-        catch
+        catch (Exception ex)
         {
+            _ = Logger.Log(ex, 3);
         }
         return new();
     }
@@ -55,8 +56,9 @@ public partial class Events
 
             return new(Responses.Success, profile ?? new());
         }
-        catch
+        catch (Exception ex)
         {
+            _ = Logger.Log(ex, 3);
         }
         return new();
     }
@@ -92,8 +94,9 @@ public partial class Events
 
             return new(Responses.Success, contacts);
         }
-        catch
+        catch (Exception ex)
         {
+            _ = Logger.Log(ex, 3);
         }
         return new();
     }
@@ -126,8 +129,9 @@ public partial class Events
 
             return new(Responses.Success);
         }
-        catch
+        catch (Exception ex)
         {
+            _ = Logger.Log(ex, 3);
         }
         return new();
     }
@@ -158,8 +162,9 @@ public partial class Events
              
             return new(Responses.Success);
         }
-        catch
+        catch (Exception ex)
         {
+            _ = Logger.Log(ex, 3);
         }
         return new();
     }
