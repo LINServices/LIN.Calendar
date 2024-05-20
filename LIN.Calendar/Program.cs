@@ -1,25 +1,13 @@
 // Servicio de errores.
 global using LIN.Access.Logger;
 using LIN.Calendar.Data;
+using Http.Extensions;
 
 // Constructor.
 var builder = WebApplication.CreateBuilder(args);
 
 // App en logger.
 LIN.Access.Logger.Logger.AppName = "LIN.CALENDAR";
-
-// CORS.
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAnyOrigin",
-        builder =>
-        {
-            builder.AllowAnyOrigin()
-               .AllowAnyHeader()
-               .AllowAnyMethod();
-        });
-});
-
 
 // Obtiene el string de conexión SQL.
 #if DEBUG
@@ -34,9 +22,7 @@ builder.Services.AddDbContext<Context>(options =>
 });
 
 // Add services to the container.
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddLINHttp();
 
 
 var app = builder.Build();
@@ -54,11 +40,8 @@ catch (Exception ex)
     _ = Logger.Log(ex, 3);
 }
 
-app.UseCors("AllowAnyOrigin");
 
-
-app.UseSwagger();
-app.UseSwaggerUI();
+app.UseLINHttp();
 
 app.UseHttpsRedirection();
 
