@@ -1,4 +1,6 @@
-﻿namespace LIN.Calendar.Data;
+﻿using LIN.Access.Logger.Services;
+
+namespace LIN.Calendar.Data;
 
 
 public partial class Events
@@ -30,7 +32,6 @@ public partial class Events
         }
         catch (Exception ex)
         {
-            _ = Logger.Log(ex, 3);
         }
         return new();
     }
@@ -58,7 +59,6 @@ public partial class Events
         }
         catch (Exception ex)
         {
-            _ = Logger.Log(ex, 3);
         }
         return new();
     }
@@ -96,7 +96,6 @@ public partial class Events
         }
         catch (Exception ex)
         {
-            _ = Logger.Log(ex, 3);
         }
         return new();
     }
@@ -131,7 +130,6 @@ public partial class Events
         }
         catch (Exception ex)
         {
-            _ = Logger.Log(ex, 3);
         }
         return new();
     }
@@ -164,7 +162,6 @@ public partial class Events
         }
         catch (Exception ex)
         {
-            _ = Logger.Log(ex, 3);
         }
         return new();
     }

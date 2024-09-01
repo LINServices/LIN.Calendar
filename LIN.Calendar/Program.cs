@@ -6,9 +6,6 @@ using Http.Extensions;
 // Constructor.
 var builder = WebApplication.CreateBuilder(args);
 
-// App en logger.
-LIN.Access.Logger.Logger.AppName = "LIN.CALENDAR";
-
 // Obtiene el string de conexión SQL.
 #if DEBUG
 var sqlConnection = builder.Configuration["ConnectionStrings:local"] ?? string.Empty;
@@ -37,7 +34,6 @@ try
 }
 catch (Exception ex)
 {
-    _ = Logger.Log(ex, 3);
 }
 
 

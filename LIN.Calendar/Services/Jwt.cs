@@ -1,4 +1,5 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using LIN.Access.Logger.Services;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -60,7 +61,6 @@ public class Jwt
         }
         catch (Exception ex)
         {
-            _ = Logger.Log(ex, 3);
         }
 
         return "";

@@ -25,7 +25,6 @@ public partial class Profiles
         }
         catch (Exception ex) 
         {
-            _ = Logger.Log(ex, 3);
         }
         return new();
     }
@@ -52,7 +51,6 @@ public partial class Profiles
         }
         catch (Exception ex)
         {
-            _ = Logger.Log(ex, 3);
         }
         return new();
     }
@@ -83,7 +81,6 @@ public partial class Profiles
         }
         catch (Exception ex)
         {
-            _ = Logger.Log(ex, 3);
         }
         return new();
     }
@@ -112,7 +109,6 @@ public partial class Profiles
         }
         catch (Exception ex)
         {
-            _ = Logger.Log(ex, 3);
         }
         return new();
     }
