@@ -1,6 +1,5 @@
 ﻿namespace LIN.Calendar.Data;
 
-
 public partial class Events
 {
 

@@ -1,4 +1,5 @@
-using LIN.Types.Emma.Models;
+using LIN.Types.Cloud.OpenAssistant.Api;
+using LIN.Types.Cloud.OpenAssistant.Models;
 using System.Text;
 
 namespace LIN.Calendar.Controllers;
@@ -15,7 +16,7 @@ public class EmmaController : ControllerBase
     /// <param name="tokenAuth">Token de identity.</param>
     /// <param name="consult">Consulta del usuario.</param>
     [HttpPost]
-    public async Task<HttpReadOneResponse<ResponseIAModel>> Assistant([FromHeader] string tokenAuth, [FromBody] string consult)
+    public async Task<HttpReadOneResponse<EmmaSchemaResponse>> Assistant([FromHeader] string tokenAuth, [FromBody] string consult)
     {
 
         // Cliente HTTP.
@@ -26,34 +27,26 @@ public class EmmaController : ControllerBase
         client.DefaultRequestHeaders.Add("useDefaultContext", true.ToString().ToLower());
 
         // Modelo de Emma.
-        var request = new LIN.Types.Models.EmmaRequest
+        var request = new AssistantRequest
         {
-            AppContext = "calendar",
-            Asks = consult
+            App = "calendar",
+            Prompt = consult
         };
 
         // Generar el string content.
         StringContent stringContent = new(Newtonsoft.Json.JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
 
         // Solicitud HTTP.
-        var result = await client.PostAsync("http://api.emma.linapps.co/emma", stringContent);
+        var result = await client.PostAsync("https://api.emma.linplatform.com/emma", stringContent);
 
         // Esperar respuesta.
         var response = await result.Content.ReadAsStringAsync();
 
         // Objeto.
-        dynamic? @object = Newtonsoft.Json.JsonConvert.DeserializeObject(response);
+        var assistantResponse = Newtonsoft.Json.JsonConvert.DeserializeObject<ReadOneResponse<EmmaSchemaResponse>>(response);
 
         // Respuesta
-        return new ReadOneResponse<ResponseIAModel>()
-        {
-            Model = new()
-            {
-                IsSuccess = true,
-                Content = @object?.result
-            },
-            Response = Responses.Success
-        };
+        return assistantResponse ?? new(Responses.Undefined);
 
     }
 

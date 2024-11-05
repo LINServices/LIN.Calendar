@@ -2,6 +2,7 @@
 global using LIN.Access.Logger;
 using LIN.Calendar.Data;
 using Http.Extensions;
+using LIN.Access.Auth;
 
 // Constructor.
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +21,7 @@ builder.Services.AddDbContext<Context>(options =>
 
 // Add services to the container.
 builder.Services.AddLINHttp();
+builder.Services.AddAuthenticationService();
 
 
 var app = builder.Build();
@@ -46,8 +48,6 @@ app.UseAuthorization();
 Conexión.SetStringConnection(sqlConnection);
 Jwt.Open();
 App.Open();
-
-LIN.Access.Auth.Build.Init();
 
 app.MapControllers();
 
