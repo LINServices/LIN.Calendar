@@ -1,21 +1,17 @@
-﻿using LIN.Access.Logger.Services;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
 namespace LIN.Calendar.Services;
 
-
 public class Jwt
 {
-
 
     /// <summary>
     /// Llave del token
     /// </summary>
     private static string JwtKey { get; set; } = string.Empty;
-
 
 
     /// <summary>
@@ -25,8 +21,6 @@ public class Jwt
     {
         JwtKey = Configuration.GetConfiguration("LIN:Jwt");
     }
-
-
 
 
     /// <summary>
@@ -66,7 +60,6 @@ public class Jwt
         return "";
 
     }
-
 
 
     /// <summary>
@@ -127,6 +120,5 @@ public class Jwt
         return new();
 
     }
-
 
 }

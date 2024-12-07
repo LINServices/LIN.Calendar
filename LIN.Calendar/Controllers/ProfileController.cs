@@ -1,10 +1,8 @@
 namespace LIN.Calendar.Controllers;
 
-
-[Route("profile")]
+[Route("[controller]")]
 public class ProfileController : ControllerBase
 {
-
 
     /// <summary>
     /// Inicia una sesión de usuario.
@@ -106,7 +104,6 @@ public class ProfileController : ControllerBase
     }
 
 
-
     /// <summary>
     /// Iniciar sesión con el token.
     /// </summary>
@@ -158,7 +155,6 @@ public class ProfileController : ControllerBase
     }
 
 
-
     /// <summary>
     /// Buscar.
     /// </summary>
@@ -204,7 +200,5 @@ public class ProfileController : ControllerBase
         };
 
     }
-
-
 
 }

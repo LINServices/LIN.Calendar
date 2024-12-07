@@ -1,8 +1,7 @@
 // Servicio de errores.
-global using LIN.Access.Logger;
-using LIN.Calendar.Data;
 using Http.Extensions;
 using LIN.Access.Auth;
+using LIN.Calendar.Data;
 
 // Constructor.
 var builder = WebApplication.CreateBuilder(args);

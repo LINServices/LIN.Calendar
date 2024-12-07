@@ -4,11 +4,9 @@ using System.Text;
 
 namespace LIN.Calendar.Controllers;
 
-
-[Route("Emma")]
+[Route("[controller]")]
 public class EmmaController : ControllerBase
 {
-
 
     /// <summary>
     /// Respuesta de Emma al usuario.
@@ -49,7 +47,6 @@ public class EmmaController : ControllerBase
         return assistantResponse ?? new(Responses.Undefined);
 
     }
-
 
 
     /// <summary>
@@ -170,6 +167,5 @@ public class EmmaController : ControllerBase
         };
 
     }
-
 
 }

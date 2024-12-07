@@ -1,15 +1,12 @@
 ﻿namespace LIN.Calendar.Services;
 
-
 public class App
 {
-
 
     /// <summary>
     /// Llave del token
     /// </summary>
     public static string AppCode { get; private set; } = string.Empty;
-
 
 
     /// <summary>
@@ -19,7 +16,5 @@ public class App
     {
         AppCode = Configuration.GetConfiguration("LIN:AppKey");
     }
-
-
 
 }

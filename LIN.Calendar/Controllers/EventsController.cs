@@ -1,10 +1,8 @@
 namespace LIN.Calendar.Controllers;
 
-
-[Route("events")]
+[Route("[controller]")]
 public class EventsController : ControllerBase
 {
-
 
     /// <summary>
     /// Crear evento.
@@ -61,7 +59,6 @@ public class EventsController : ControllerBase
     }
 
 
-
     /// <summary>
     /// Obtiene los eventos asociados a un perfil.
     /// </summary>
@@ -85,8 +82,6 @@ public class EventsController : ControllerBase
         };
 
     }
-
-
 
 
     /// <summary>
@@ -122,7 +117,6 @@ public class EventsController : ControllerBase
     }
 
 
-
     /// <summary>
     /// Actualizar evento.
     /// </summary>
@@ -154,7 +148,5 @@ public class EventsController : ControllerBase
         return response;
 
     }
-
-
 
 }

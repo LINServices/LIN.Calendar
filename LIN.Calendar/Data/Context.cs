@@ -1,12 +1,10 @@
 ﻿namespace LIN.Calendar.Data;
 
-
 /// <summary>
 /// Nuevo contexto a la base de datos
 /// </summary>
 public class Context(DbContextOptions<Context> options) : DbContext(options)
 {
-
 
     /// <summary>
     /// Tabla de perfiles.
@@ -20,12 +18,10 @@ public class Context(DbContextOptions<Context> options) : DbContext(options)
     public DbSet<EventModel> Events { get; set; }
 
 
-
     /// <summary>
     /// Tabla de eventos.
     /// </summary>
     public DbSet<EventGuestModel> Guests { get; set; }
-
 
 
     /// <summary>
@@ -61,6 +57,5 @@ public class Context(DbContextOptions<Context> options) : DbContext(options)
         modelBuilder.Entity<EventGuestModel>().ToTable("GUESTS");
 
     }
-
 
 }

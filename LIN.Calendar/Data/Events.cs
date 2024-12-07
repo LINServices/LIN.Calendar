@@ -3,7 +3,6 @@
 public partial class Events
 {
 
-
     /// <summary>
     /// Crea un evento.
     /// </summary>
@@ -22,7 +21,6 @@ public partial class Events
         return response;
 
     }
-
 
 
     /// <summary>
@@ -45,7 +43,6 @@ public partial class Events
     }
 
 
-
     /// <summary>
     /// Obtiene los eventos asociados a un perfil
     /// </summary>
@@ -64,7 +61,6 @@ public partial class Events
         return response;
 
     }
-
 
 
     /// <summary>
@@ -87,7 +83,6 @@ public partial class Events
     }
 
 
-
     /// <summary>
     /// Actualizar un evento.
     /// </summary>
@@ -106,6 +101,5 @@ public partial class Events
         return response;
 
     }
-
 
 }

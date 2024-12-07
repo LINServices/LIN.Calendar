@@ -2,10 +2,8 @@
 
 namespace LIN.Calendar.Services;
 
-
 public class Iam
 {
-
 
     /// <summary>
     /// Validar el acceso.
@@ -41,6 +39,5 @@ public class Iam
         }
         return IamLevels.NotAccess;
     }
-
 
 }
