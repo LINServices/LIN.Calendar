@@ -117,21 +117,7 @@ public class EmmaController : ControllerBase
                         Estos son comandos:
                         
                         {
-                          "name": "#say",
-                          "description": "Utiliza esta función para decirle algo al usuario como saludos o responder a preguntas.",
-                          "example":"#say('Hola')",
-                          "parameters": {
-                            "properties": {
-                              "content": {
-                                "type": "string",
-                                "description": "contenido"
-                              }
-                            }
-                          }
-                        }
-
-                        {
-                          "name": "#agendar",
+                          "name": "agendar",
                           "description": "Utiliza esta función para agendar eventos.",
                           "example":"#agendar('Hola', '02-15-2006 20:45')",
                           "parameters": {
@@ -151,7 +137,7 @@ public class EmmaController : ControllerBase
                         Si el usuario te pide agendar y el horario esta ocupado, debes contestar : "Ya tienes un evento para esa fecha"
 
                         El formato para responder con comandos es:
-                        "#NombreDelComando(Propiedades en orden separados por coma si es necesario)"
+                        "NombreDelComando(Propiedades en orden separados por coma si es necesario)"
                         
                         
                         IMPORTANTE:

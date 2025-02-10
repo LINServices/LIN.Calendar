@@ -69,7 +69,6 @@ public partial class Profiles
     /// <param name="ids">Lista de Ids.</param>
     public static async Task<ReadAllResponse<ProfileModel>> ReadByAccounts(IEnumerable<int> ids)
     {
-
         // Contexto
         (var context, var connectionKey) = Conexión.GetOneConnection();
 

@@ -1,10 +1,7 @@
 ﻿namespace LIN.Calendar.Data;
 
-
 public partial class Profiles
 {
-
-
 
     /// <summary>
     /// Crea un perfil.
@@ -23,12 +20,11 @@ public partial class Profiles
             await context.DataBase.SaveChangesAsync();
             return new(Responses.Success, data.Profile);
         }
-        catch (Exception ex) 
+        catch (Exception) 
         {
         }
         return new();
     }
-
 
 
     /// <summary>
@@ -49,12 +45,11 @@ public partial class Profiles
 
             return new(Responses.Success, profile ?? new());
         }
-        catch (Exception ex)
+        catch (Exception)
         {
         }
         return new();
     }
-
 
 
     /// <summary>
@@ -86,7 +81,6 @@ public partial class Profiles
     }
 
 
-
     /// <summary>
     /// Obtiene perfiles según los Id de las cuentas.
     /// </summary>
@@ -107,12 +101,10 @@ public partial class Profiles
 
             return new(Responses.Success, profile ?? []);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
         }
         return new();
     }
-
-
 
 }

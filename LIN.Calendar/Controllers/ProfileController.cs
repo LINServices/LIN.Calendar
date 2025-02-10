@@ -82,7 +82,6 @@ public class ProfileController : ControllerBase
         // Genera el token
         var token = Jwt.Generate(profile.Model);
 
-
         // Respuesta.
         return new ReadOneResponse<AuthModel<ProfileModel>>
         {
@@ -119,7 +118,6 @@ public class ProfileController : ControllerBase
         if (response.Response != Responses.Success)
             return new(response.Response);
 
-
         // Obtener el perfil.
         var profile = await Data.Profiles.ReadByAccount(response.Model.Id);
 
@@ -149,7 +147,6 @@ public class ProfileController : ControllerBase
             }
         };
 
-
         return httpResponse;
 
     }
@@ -175,7 +172,6 @@ public class ProfileController : ControllerBase
                 Message = "No tienes acceso a LIN Identity"
             };
 
-
         // Id de las cuentas.
         var mappedIds = accounts.Models.Select(T => T.Id).ToList();
 
@@ -185,7 +181,7 @@ public class ProfileController : ControllerBase
         // Map.
         var final = from P in profiles.Models
                     join A in accounts.Models
-                        on P.AccountId equals A.Id
+                    on P.AccountId equals A.Id
                     select new SessionModel<ProfileModel>
                     {
                         Account = A,
