@@ -1,49 +1,26 @@
-// Servicio de errores.
 using Http.Extensions;
 using LIN.Access.Auth;
-using LIN.Calendar.Data;
+using LIN.Calendar.Persistence.Extensions;
 
 // Constructor.
 var builder = WebApplication.CreateBuilder(args);
 
-// Obtiene el string de conexión SQL.
-var sqlConnection = builder.Configuration["ConnectionStrings:somee"] ?? string.Empty;
-
-// Servicio de BD
-builder.Services.AddDbContext<Context>(options =>
-{
-    options.UseSqlServer(sqlConnection);
-});
-
 // Add services to the container.
 builder.Services.AddLINHttp();
-builder.Services.AddAuthenticationService();
+builder.Services.AddAuthenticationService(app: builder.Configuration["LIN:AppKey"]);
+builder.Services.AddPersistence(builder.Configuration);
 
+builder.Services.AddScoped<Iam>();
 
+// Construir app.
 var app = builder.Build();
 
-
-try
-{
-    // Si la base de datos no existe.
-    using var scope = app.Services.CreateScope();
-    var dataContext = scope.ServiceProvider.GetRequiredService<Context>();
-    var res = dataContext.Database.EnsureCreated();
-}
-catch (Exception ex)
-{
-}
-
-
 app.UseLINHttp();
-
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
+app.UsePersistence();
 
-Conexión.SetStringConnection(sqlConnection);
 Jwt.Open();
-App.Open();
 
 app.MapControllers();
 

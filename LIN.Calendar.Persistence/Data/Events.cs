@@ -1,84 +1,74 @@
-﻿using LIN.Access.Logger.Services;
+﻿using LIN.Types.Calendar.Models;
+using LIN.Types.Responses;
+using Microsoft.EntityFrameworkCore;
 
-namespace LIN.Calendar.Data;
+namespace LIN.Calendar.Persistence.Data;
 
-
-public partial class Events
+public class Events(Context.DataContext context)
 {
-
 
     /// <summary>
     /// Crea un evento.
     /// </summary>
     /// <param name="data">Modelo.</param>
-    /// <param name="context">Contexto de conexión.</param>
-    public static async Task<CreateResponse> Create(EventModel data, Conexión context)
+    public async Task<CreateResponse> Create(EventModel data)
     {
         // Ejecución
         try
         {
-
             // Los invitados.
             foreach (var guest in data.Guests)
             {
                 guest.Event = data;
-                context.DataBase.Attach(guest.Profile);
+                context.Attach(guest.Profile);
             }
 
             // Guardar el evento.
-            var res = context.DataBase.Events.Add(data);
-            await context.DataBase.SaveChangesAsync();
+            var res = context.Events.Add(data);
+            await context.SaveChangesAsync();
             return new(Responses.Success, data.Id);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
         }
         return new();
     }
-
 
 
     /// <summary>
     /// Obtiene un evento.
     /// </summary>
     /// <param name="id">ID del evento</param>
-    /// <param name="context">Contexto de conexión.</param>
-    public static async Task<ReadOneResponse<EventModel>> Read(int id, Conexión context)
+    public async Task<ReadOneResponse<EventModel>> Read(int id)
     {
-
-
         // Ejecución
         try
         {
+            var eventModel = await (from @event in context.Events
+                                    where @event.Id == id
+                                    select @event).FirstOrDefaultAsync();
 
-            var profile = await (from P in context.DataBase.Events
-                                 where P.Id == id
-                                 select P).FirstOrDefaultAsync();
-
-            return new(Responses.Success, profile ?? new());
+            return new(eventModel is null ? Responses.NotRows : Responses.Success, eventModel!);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
         }
         return new();
     }
 
 
-
     /// <summary>
     /// Obtiene los eventos asociados a un perfil.
     /// </summary>
     /// <param name="id">ID del perfil.</param>
-    /// <param name="context">Contexto de conexión.</param>
-    public static async Task<ReadAllResponse<EventModel>> ReadAll(int id, Conexión context)
+    public async Task<ReadAllResponse<EventModel>> ReadAll(int id)
     {
 
         // Ejecución
         try
         {
-
             // Consulta.
-            var contacts = await (from evento in context.DataBase.Events
+            var events = await (from evento in context.Events
                                   where evento.Guests.Any(t => t.ProfileId == id)
                                   orderby evento.Nombre
                                   select new EventModel
@@ -86,40 +76,36 @@ public partial class Events
                                       DateStart = evento.DateStart,
                                       IsAllDay = evento.IsAllDay,
                                       EndStart = evento.EndStart,
-                                      Guests = context.DataBase.Guests.Where(t=>t.EventId == evento.Id).Include(t => t.Profile).ToList(),
+                                      Guests = context.Guests.Where(t => t.EventId == evento.Id).Include(t => t.Profile).ToList(),
                                       Id = evento.Id,
                                       Nombre = evento.Nombre,
                                       Type = evento.Type
                                   }).ToListAsync();
 
-            return new(Responses.Success, contacts);
+            return new(Responses.Success, events);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
         }
         return new();
     }
 
 
-
     /// <summary>
     /// Eliminar un evento.
     /// </summary>
     /// <param name="id">ID del evento</param>
-    /// <param name="context">Contexto de conexión.</param>
-    public static async Task<ResponseBase> Delete(int id, Conexión context)
+    public async Task<ResponseBase> Delete(int id)
     {
-
-
         // Ejecución
         try
         {
 
-            var result = await (from P in context.DataBase.Guests
+            var result = await (from P in context.Guests
                                 where P.EventId == id
                                 select P).ExecuteDeleteAsync();
 
-            result = await (from P in context.DataBase.Events
+            result = await (from P in context.Events
                             where P.Id == id
                             select P).ExecuteDeleteAsync();
 
@@ -128,43 +114,36 @@ public partial class Events
 
             return new(Responses.Success);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
         }
         return new();
     }
-
 
 
     /// <summary>
     /// Actualizar evento.
     /// </summary>
     /// <param name="eventModel">Modelo.</param>
-    /// <param name="context">Contexto de conexión.</param>
-    public static async Task<ResponseBase> Update(EventModel eventModel, Conexión context)
+    public async Task<ResponseBase> Update(EventModel eventModel)
     {
-
-
         // Ejecución
         try
         {
+            var count = await (from @event in context.Events
+                           where @event.Id == eventModel.Id
+                           select @event).ExecuteUpdateAsync(t => t.SetProperty(t => t.IsAllDay, eventModel.IsAllDay)
+                           .SetProperty(t => t.Nombre, eventModel.Nombre)
+                           .SetProperty(t => t.DateStart, eventModel.DateStart)
+                           .SetProperty(t => t.EndStart, eventModel.EndStart)
+                           .SetProperty(t => t.Type, eventModel.Type));
 
-
-            var x = await (from @event in context.DataBase.Events
-                     where @event.Id == eventModel.Id
-                     select @event).ExecuteUpdateAsync(t => t.SetProperty(t => t.IsAllDay, eventModel.IsAllDay)
-                     .SetProperty(t => t.Nombre, eventModel.Nombre)
-                     .SetProperty(t => t.DateStart, eventModel.DateStart)
-                     .SetProperty(t => t.EndStart, eventModel.EndStart)
-                     .SetProperty(t => t.Type, eventModel.Type));
-             
             return new(Responses.Success);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
         }
         return new();
     }
-
 
 }

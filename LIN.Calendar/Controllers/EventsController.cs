@@ -1,7 +1,8 @@
 namespace LIN.Calendar.Controllers;
 
+[LocalToken]
 [Route("[controller]")]
-public class EventsController : ControllerBase
+public class EventsController(Persistence.Data.Events events, Iam iamService) : ControllerBase
 {
 
     /// <summary>
@@ -10,7 +11,6 @@ public class EventsController : ControllerBase
     /// <param name="token">Token de acceso.</param>
     /// <param name="model">Modelo.</param>
     [HttpPost]
-    [LocalToken]
     public async Task<HttpCreateResponse> Create([FromHeader] string token, [FromBody] EventModel model)
     {
 
@@ -52,7 +52,7 @@ public class EventsController : ControllerBase
         }
 
         // Crear el contacto
-        var response = await Data.Events.Create(model);
+        var response = await events.Create(model);
 
         return response;
 
@@ -64,7 +64,6 @@ public class EventsController : ControllerBase
     /// </summary>
     /// <param name="token">Token de acceso.</param>
     [HttpGet("all")]
-    [LocalToken]
     public async Task<HttpReadAllResponse<EventModel>> ReadAll([FromHeader] string token)
     {
 
@@ -72,7 +71,7 @@ public class EventsController : ControllerBase
         JwtModel tokenInfo = HttpContext.Items[token] as JwtModel ?? new();
 
         // Obtiene los contactos
-        var all = await Data.Events.ReadAll(tokenInfo.ProfileId);
+        var all = await events.ReadAll(tokenInfo.ProfileId);
 
         // Respuesta.
         return new ReadAllResponse<EventModel>()
@@ -90,7 +89,6 @@ public class EventsController : ControllerBase
     /// <param name="id">Id del evento.</param>
     /// <param name="token">Token de acceso.</param>
     [HttpDelete]
-    [LocalToken]
     public async Task<HttpResponseBase> Delete([FromQuery] int id, [FromHeader] string token)
     {
 
@@ -98,7 +96,7 @@ public class EventsController : ControllerBase
         JwtModel tokenInfo = HttpContext.Items[token] as JwtModel ?? new();
 
         // Iam.
-        var iam = await Services.Iam.Validate(tokenInfo.ProfileId, id);
+        var iam = await iamService.Validate(tokenInfo.ProfileId, id);
 
         // Validar Iam.
         if (iam != Types.Enumerations.IamLevels.Privileged)
@@ -109,7 +107,7 @@ public class EventsController : ControllerBase
             };
 
         // Obtiene los contactos
-        var response = await Data.Events.Delete(id);
+        var response = await events.Delete(id);
 
         // Respuesta.
         return response;
@@ -123,7 +121,6 @@ public class EventsController : ControllerBase
     /// <param name="eventModel">Modelo del evento.</param>
     /// <param name="token">Token de acceso.</param>
     [HttpPatch]
-    [LocalToken]
     public async Task<HttpResponseBase> Update([FromBody] EventModel eventModel, [FromHeader] string token)
     {
 
@@ -131,7 +128,7 @@ public class EventsController : ControllerBase
         JwtModel tokenInfo = HttpContext.Items[token] as JwtModel ?? new();
 
         // Iam.
-        var iam = await Services.Iam.Validate(tokenInfo.ProfileId, eventModel.Id);
+        var iam = await iamService.Validate(tokenInfo.ProfileId, eventModel.Id);
 
         // Validar Iam.
         if (iam != Types.Enumerations.IamLevels.Privileged)
@@ -142,7 +139,7 @@ public class EventsController : ControllerBase
             };
 
         // Obtiene los contactos
-        var response = await Data.Events.Update(eventModel);
+        var response = await events.Update(eventModel);
 
         // Respuesta.
         return response;

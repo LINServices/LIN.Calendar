@@ -1,8 +1,9 @@
-﻿using LIN.Types.Enumerations;
+﻿using LIN.Calendar.Persistence.Context;
+using LIN.Types.Enumerations;
 
 namespace LIN.Calendar.Services;
 
-public class Iam
+public class Iam(DataContext context)
 {
 
     /// <summary>
@@ -10,22 +11,15 @@ public class Iam
     /// </summary>
     /// <param name="profile">Id del perfil.</param>
     /// <param name="eventId">Id de la conversación.</param>
-    public async static Task<IamLevels> Validate(int profile, int eventId)
+    public async Task<IamLevels> Validate(int profile, int eventId)
     {
         try
         {
-
-            // Contexto de conexión a la bd.
-            var (context, contextKey) = Conexión.GetOneConnection();
-
             // Consulta.
-            var have = await (from member in context.DataBase.Guests
+            var have = await (from member in context.Guests
                               where member.ProfileId == profile
                               && member.EventId == eventId
                               select member).FirstOrDefaultAsync();
-
-            // Cerrar la conexión.
-            context.CloseActions(contextKey);
 
             // No existe.
             if (have == null)
@@ -34,7 +28,7 @@ public class Iam
             // Visualizador.
             return IamLevels.Privileged;
         }
-        catch
+        catch(Exception)
         {
         }
         return IamLevels.NotAccess;

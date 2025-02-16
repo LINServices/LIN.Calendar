@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Calendar", "LIN.Calenda
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Access.Logger", "..\..\AccesoAPI\LIN.Access.Logger\LIN.Access.Logger.csproj", "{418C7AB4-DF1A-42F2-8A5D-6B8D2DD83D5C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LIN.Calendar.Persistence", "LIN.Calendar.Persistence\LIN.Calendar.Persistence.csproj", "{7460BC90-6B2E-4330-9008-2A101E9E0905}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,14 @@ Global
 		{418C7AB4-DF1A-42F2-8A5D-6B8D2DD83D5C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{418C7AB4-DF1A-42F2-8A5D-6B8D2DD83D5C}.Release|x86.ActiveCfg = Release|Any CPU
 		{418C7AB4-DF1A-42F2-8A5D-6B8D2DD83D5C}.Release|x86.Build.0 = Release|Any CPU
+		{7460BC90-6B2E-4330-9008-2A101E9E0905}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7460BC90-6B2E-4330-9008-2A101E9E0905}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7460BC90-6B2E-4330-9008-2A101E9E0905}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7460BC90-6B2E-4330-9008-2A101E9E0905}.Debug|x86.Build.0 = Debug|Any CPU
+		{7460BC90-6B2E-4330-9008-2A101E9E0905}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7460BC90-6B2E-4330-9008-2A101E9E0905}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7460BC90-6B2E-4330-9008-2A101E9E0905}.Release|x86.ActiveCfg = Release|Any CPU
+		{7460BC90-6B2E-4330-9008-2A101E9E0905}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

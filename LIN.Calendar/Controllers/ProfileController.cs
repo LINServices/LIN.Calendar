@@ -1,7 +1,7 @@
 namespace LIN.Calendar.Controllers;
 
 [Route("[controller]")]
-public class ProfileController : ControllerBase
+public class ProfileController(Persistence.Data.Profiles profiles) : ControllerBase
 {
 
     /// <summary>
@@ -18,7 +18,7 @@ public class ProfileController : ControllerBase
             return new(Responses.InvalidParam);
 
         // Respuesta de autenticación.
-        var authResponse = await Access.Auth.Controllers.Authentication.Login(user, password, App.AppCode);
+        var authResponse = await Access.Auth.Controllers.Authentication.Login(user, password);
 
         // Autenticación errónea.
         if (authResponse.Response != Responses.Success)
@@ -29,7 +29,7 @@ public class ProfileController : ControllerBase
             };
 
         // Obtiene el perfil
-        var profile = await Data.Profiles.ReadByAccount(authResponse.Model.Id);
+        var profile = await profiles.ReadByAccount(authResponse.Model.Id);
 
         // Validar la respuesta.
         switch (profile.Response)
@@ -44,7 +44,7 @@ public class ProfileController : ControllerBase
                 {
 
                     // Crear.
-                    var createResponse = await Data.Profiles.Create(new()
+                    var createResponse = await profiles.Create(new()
                     {
                         Account = authResponse.Model,
                         Profile = new()
@@ -119,7 +119,7 @@ public class ProfileController : ControllerBase
             return new(response.Response);
 
         // Obtener el perfil.
-        var profile = await Data.Profiles.ReadByAccount(response.Model.Id);
+        var profile = await profiles.ReadByAccount(response.Model.Id);
 
         // Respuesta http.
         var httpResponse = new ReadOneResponse<AuthModel<ProfileModel>>()
@@ -176,10 +176,10 @@ public class ProfileController : ControllerBase
         var mappedIds = accounts.Models.Select(T => T.Id).ToList();
 
         // Obtener los perfiles.
-        var profiles = await Data.Profiles.ReadByAccounts(mappedIds);
+        var profilesSearch = await profiles.ReadByAccounts(mappedIds);
 
         // Map.
-        var final = from P in profiles.Models
+        var final = from P in profilesSearch.Models
                     join A in accounts.Models
                     on P.AccountId equals A.Id
                     select new SessionModel<ProfileModel>

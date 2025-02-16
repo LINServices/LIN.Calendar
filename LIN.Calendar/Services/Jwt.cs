@@ -53,7 +53,7 @@ public class Jwt
             // Genera el token
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
         }
 

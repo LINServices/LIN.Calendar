@@ -1,9 +1,12 @@
-﻿namespace LIN.Calendar.Data;
+﻿using LIN.Types.Calendar.Models;
+using Microsoft.EntityFrameworkCore;
+
+namespace LIN.Calendar.Persistence.Context;
 
 /// <summary>
 /// Nuevo contexto a la base de datos
 /// </summary>
-public class Context(DbContextOptions<Context> options) : DbContext(options)
+public class DataContext(DbContextOptions<DataContext> options) : DbContext(options)
 {
 
     /// <summary>
@@ -35,12 +38,10 @@ public class Context(DbContextOptions<Context> options) : DbContext(options)
            .HasIndex(e => e.AccountId)
            .IsUnique();
 
-
         modelBuilder.Entity<EventGuestModel>()
            .HasOne(t => t.Event)
            .WithMany(t => t.Guests)
            .HasForeignKey(t => t.EventId);
-
 
         modelBuilder.Entity<EventGuestModel>()
              .HasOne(t => t.Profile)
@@ -50,11 +51,10 @@ public class Context(DbContextOptions<Context> options) : DbContext(options)
         modelBuilder.Entity<EventGuestModel>()
             .HasKey(t => new { t.EventId, t.ProfileId });
 
-
         // Nombres de las tablas.
-        modelBuilder.Entity<ProfileModel>().ToTable("PROFILES");
-        modelBuilder.Entity<EventModel>().ToTable("EVENTS");
-        modelBuilder.Entity<EventGuestModel>().ToTable("GUESTS");
+        modelBuilder.Entity<ProfileModel>().ToTable("Profile");
+        modelBuilder.Entity<EventModel>().ToTable("Event");
+        modelBuilder.Entity<EventGuestModel>().ToTable("Guest");
 
     }
 

@@ -5,7 +5,7 @@ using System.Text;
 namespace LIN.Calendar.Controllers;
 
 [Route("[controller]")]
-public class EmmaController : ControllerBase
+public class EmmaController(Persistence.Data.Events events, Persistence.Data.Profiles profiles) : ControllerBase
 {
 
     /// <summary>
@@ -70,7 +70,7 @@ public class EmmaController : ControllerBase
         }
 
         // 
-        var profile = await Data.Profiles.ReadByAccount(response.Model.Id);
+        var profile = await profiles.ReadByAccount(response.Model.Id);
 
 
         if (profile.Response != Responses.Success)
@@ -83,7 +83,7 @@ public class EmmaController : ControllerBase
 
 
         // Eventos.
-        var eve = await Data.Events.ReadAll(profile.Model.Id);    
+        var eve = await events.ReadAll(profile.Model.Id);    
 
 
 
