@@ -10,6 +10,9 @@ builder.Services.AddLINHttp();
 builder.Services.AddAuthenticationService(app: builder.Configuration["LIN:AppKey"]);
 builder.Services.AddPersistence(builder.Configuration);
 
+// Configurar logs.
+builder.Host.UseLoggingService(builder.Configuration);
+
 builder.Services.AddScoped<Iam>();
 
 // Construir app.
