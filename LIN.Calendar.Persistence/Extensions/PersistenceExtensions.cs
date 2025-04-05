@@ -26,7 +26,6 @@ public static class PersistenceExtensions
         services.AddScoped<Events, Events>();
         services.AddScoped<Profiles, Profiles>();
         return services;
-
     }
 
 
