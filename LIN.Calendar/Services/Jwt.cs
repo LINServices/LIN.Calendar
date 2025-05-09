@@ -17,9 +17,9 @@ public class Jwt
     /// <summary>
     /// Inicia el servicio Jwt
     /// </summary>
-    public static void Open()
+    public static void Open(IConfigurationManager configuration)
     {
-        JwtKey = Configuration.GetConfiguration("LIN:Jwt");
+        JwtKey = configuration["LIN:Jwt"];
     }
 
 

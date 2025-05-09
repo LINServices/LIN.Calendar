@@ -23,7 +23,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 app.UsePersistence();
 
-Jwt.Open();
+Jwt.Open(builder.Configuration);
 
 app.MapControllers();
 
